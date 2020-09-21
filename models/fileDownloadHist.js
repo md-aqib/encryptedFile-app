@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const downloadHistory = new Schema({
+const fileDownloadHist = new Schema({
   userName: String,
   userEmail: String,
   filename: String,
@@ -18,4 +18,6 @@ const downloadHistory = new Schema({
   },
 });
 
-module.exports = mongoose.model("fileDownloadHist", downloadHistory);
+fileDownloadHist.index({ location: "2d" });
+
+module.exports = mongoose.model("fileDownloadHist", fileDownloadHist);
