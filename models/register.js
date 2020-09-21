@@ -52,6 +52,6 @@ register.pre("save", function (next) {
   }
 });
 
-register.index({ "location.coordinates": "2dsphere" });
+register.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("register", register);

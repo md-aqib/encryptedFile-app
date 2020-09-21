@@ -18,6 +18,7 @@ const fileDownloadHist = new Schema({
   },
 });
 
-fileDownloadHist.index({ location: "2d" });
+fileDownloadHist.index({ location: "2dsphere" });
+// fileDownloadHist.index({ location: "2d" });
 
 module.exports = mongoose.model("fileDownloadHist", fileDownloadHist);
