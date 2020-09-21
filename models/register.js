@@ -21,17 +21,6 @@ const register = new Schema({
   age: Number,
   isAdmin: Boolean,
   token: String,
-  ipAddress: String,
-  location: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      default: "Point",
-    },
-    coordinates: {
-      type: [Number],
-    },
-  },
   createdAt: {
     type: Date,
     default: new Date(),
@@ -51,7 +40,5 @@ register.pre("save", function (next) {
     });
   }
 });
-
-register.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("register", register);

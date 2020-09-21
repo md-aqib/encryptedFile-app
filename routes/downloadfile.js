@@ -27,11 +27,8 @@ module.exports = async (req, res) => {
         } else {
           let ip = "207.97.227.239"; //for dynamic ip use 'req.connection.remoteAddress';
           let geo = geoip.lookup(ip);
-          let updatedUser = await DBregister.findOneAndUpdate(
-            { email: req.decoded.email },
-            { $set: { "location.coordinates": geo.ll, ipAddress: ip } },
-            { new: true, upsert: true }
-          );
+          let ll = geo.ll.reverse();
+
           let updatedFile = await DBfile.findOneAndUpdate(
             { filename: req.body.filename },
             { $push: { downloadedBy: registeredData._id } },
@@ -40,12 +37,12 @@ module.exports = async (req, res) => {
             }
           );
           let saveDownHistory = new DBdownHistory({
-            userName: updatedUser.name,
-            userEmail: updatedUser.email,
+            userName: registeredData.name,
+            userEmail: registeredData.email,
             filename: req.body.filename,
             ipAddress: ip,
             location: {
-              coordinates: [-73.88, 40.78], //geo.ll,
+              coordinates: ll,
             },
           });
           await saveDownHistory.save();
